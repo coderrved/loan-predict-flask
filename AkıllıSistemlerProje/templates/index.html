@@ -4,21 +4,73 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <style>
+
+input[type=number], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+  text-align: center;
+}
+div {
+  border-radius: 5px;
+  background-color: rgb(26, 112, 91);
+  padding: 20px;
+  width: 40%;
+  margin-right: auto;
+  margin-left: auto;
+}
+body{
+    background-color: rgb(144, 215, 197);
+}
+        
+    </style>
+    <title>Expert System</title>
 </head>
 <body>
-    <form action="/toplam" method="POST">
-    <input type="number" name="number1"><br>
-    <input type="number" name="number2"><br>
-    <input type="number" name="number3"><br>
-    <input type="number" name="number4"><br>
-    <input type="number" name="number5"><br>
-    <input type="number" name="number6"><br>
-    <input type="number" name="number7"><br>
-    <button type="submit">Gönder</button>
-    </form>
+    <h1 style="text-align: center; margin-top: 30px; margin-bottom: 40px; color: black">BANKA KREDİ UYGULAMASINA HOŞGELDİNİZ</h3>
 
+        <div>
+            <form action="#" method="POST">
+                <input type="number" name="number1" placeholder="Bağımlılar"><br>
+                <input type="number" name="number2" placeholder="Serbest Meslek"><br>
+                <input type="number" name="number3" placeholder="Başvuru Sahibi Gelir"><br>
+                <input type="number" name="number4" placeholder="Eşbaşvuran Gelir"><br>
+                <input type="number" name="number5" placeholder="Kredi miktarı"><br>
+                <input type="number" name="number6" placeholder="Kredi Miktarı Vade"><br>
+                <input type="number" name="number7" placeholder="Kredi Geçmişi"><br>
+                <input type="submit" value="Gönder">
+            </form>
+        </div>
+        
+   
 
-    <p>{{number}}</p>
+    
+
+    {% if donenDeger %}
+    <p style=" margin-top: 40px; text-align: center; font-size: 20px;">Banka tarafından kredi verilmeye <b>{{donenDeger}}</b></p>
+    {% else %}
+    
+    {% endif %}
+    
 </body>
 </html>

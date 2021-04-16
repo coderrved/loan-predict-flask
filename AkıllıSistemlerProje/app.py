@@ -104,14 +104,62 @@ def decisionTreeClassifierModel(X_test,X_train,y_test,y_train,number1,number2,nu
     #linear_predict_data=np.array([[0.71669001,0.71669001, 1.67329007, 1.46510366, 0.60565725,-0.38359174, 0.71576473]])
     linear_predict_data=newArray2
 
-    #print(linear_predict_data.shape)
-
     y_pred1 = decision_tree_tuned.predict(linear_predict_data)
     print(y_pred1)
     return y_pred1
 
-@app.route('/')
+
+@app.route('/',methods=["GET","POST"])
 def hello_world():
+    if request.method == "POST":
+        number1 = request.form.get("number1")
+        number2 = request.form.get("number2")
+        number3 = request.form.get("number3")
+        number4 = request.form.get("number4")
+        number5 = request.form.get("number5")
+        number6 = request.form.get("number6")
+        number7 = request.form.get("number7")   
+        print("form bilgileri")
+        print(number1)
+        print(number2)
+        print(number3)
+        print(number4)
+        print(number5)
+        print(number6)
+        print(number7)
+
+        ds = pd.read_csv("C:\\Users\\oem\\Desktop\\JupyterNotebook\\train_kredi_tahmini.csv") #csv dosyasi okuma
+    
+        ds_crop = mask(ds)
+
+        ds_fill=fillNaFunc(ds_crop)
+    
+        ds_fill = fillTypeConvert(ds_fill)
+        print("************")
+
+        print("************")
+        #smoteProcess(ds_fill)
+
+        print("************")
+        X_sm = smoteProcessXSM(ds_fill)
+        y_sm = smoteProcessYSM(ds_fill)
+        X_sm = denemeFunc(X_sm)
+        print("************")
+
+        X_train, X_test, y_train, y_test = train_test_split(X_sm, y_sm, test_size = 0.4, random_state = 120)
+        gelenDeger = decisionTreeClassifierModel(X_test,X_train,y_test,y_train,number1,number2,number3,number4,number5,number6,number7)
+
+        if gelenDeger[0] == 0:
+            donenDeger = "UYGUN DEĞİLDİR"
+        else:
+            donenDeger = "UYGUNDUR"
+
+        return render_template("index.html",donenDeger=donenDeger)
+    if request.method == "GET":
+        
+
+        return render_template("index.html")
+
     """
     ds = pd.read_csv("C:\\Users\\oem\\Desktop\\JupyterNotebook\\train_kredi_tahmini.csv") #csv dosyasi okuma
     
@@ -137,8 +185,9 @@ def hello_world():
         donenDeger = "Verilmez"
     else:
         donenDeger = "Verilir"
-"""
+
     return render_template("index.html")
+    """
 
 @app.route("/toplam", methods=["GET","POST"])
 def toplam():
