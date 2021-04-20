@@ -51,10 +51,10 @@ body{
 
         <div>
             <form action="#" method="POST">
-                <input type="number" name="number1" placeholder="Bağımlılar"><br>
-                <input type="number" name="number2" placeholder="Serbest Meslek"><br>
-                <input type="number" name="number3" placeholder="Başvuru Sahibi Gelir"><br>
-                <input type="number" name="number4" placeholder="Eşbaşvuran Gelir"><br>
+                <input type="number" name="number1" placeholder="Bakmakla Yükümlü Olunan Kişi Sayısı"><br>
+                <input type="number" name="number2" placeholder="Kendi İşi mi?"><br>
+                <input type="number" name="number3" placeholder="Başvuru Sahibinin Aylık Gelir"><br>
+                <input type="number" name="number4" placeholder="Kefilin Aylık Geliri"><br>
                 <input type="number" name="number5" placeholder="Kredi miktarı"><br>
                 <input type="number" name="number6" placeholder="Kredi Miktarı Vade"><br>
                 <input type="number" name="number7" placeholder="Kredi Geçmişi"><br>
@@ -68,6 +68,12 @@ body{
 
     {% if donenDeger %}
     <p style=" margin-top: 40px; text-align: center; font-size: 20px;">Banka tarafından kredi verilmeye <b>{{donenDeger}}</b></p>
+    {% else %}
+    
+    {% endif %}
+
+    {% if donenDeger2 %}
+    <p style=" margin-top: 40px; text-align: center; font-size: 20px;">Banka tarafından kredi verilmeye <b>{{donenDeger2}}</b></p>
     {% else %}
     
     {% endif %}
