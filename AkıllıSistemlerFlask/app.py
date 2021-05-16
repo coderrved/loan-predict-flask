@@ -1,7 +1,7 @@
 from flask import Flask,render_template,request
 from sklearn.preprocessing import StandardScaler
 import pickle
-
+import numpy as np
 
 app = Flask(__name__)
 model = pickle.load(open('model.pkl', 'rb'))
@@ -19,20 +19,15 @@ def hello_world():
         number6 = request.form.get("number6")
         number7 = request.form.get("number7")   
         
-        data = [[number1], [number2], [number3], [number4],[number5],[number6],[number7]]
-        scaler = StandardScaler()
-        scaler.fit(data)
-        scaler.mean_
-        newArray = scaler.transform(data)
-        newArray2 = newArray.reshape(1,7)
+        data = [number1, number2, number3, number4,number5,number6,number7]
+        np_array=np.asarray(data)
+        data = np_array.reshape(1,7)
 
-        gelenDeger = model.predict(newArray2)
-        gelenDeger2 = model_rf.predict(newArray2)
+        gelenDeger = model.predict(data)
+        print(gelenDeger)
+        gelenDeger2 = model_rf.predict(data)
+        print(gelenDeger2)
         
-        print("Decision Tree: ", gelenDeger[0])
-        print("Random Forest: ", gelenDeger2[0])
-        #gelenDeger[0] = 1
-
         if gelenDeger[0] == gelenDeger2[0]:
             if gelenDeger[0] == 0:
                 donenDeger = "UYGUN DEĞİLDİR"
@@ -42,13 +37,14 @@ def hello_world():
                 return render_template("index.html",donenDeger=donenDeger)
         else:
             if gelenDeger[0] == 0:
-                donenDeger = "UYGUN DEĞİLDİR"
+                donenDeger = "DT'YE UYGUN DEĞİLDİR"
                 donenDeger2 = "RF'E GORE UYGUNDUR"
                 return render_template("index.html",donenDeger=donenDeger, donenDeger2=donenDeger2)
             else:
                 donenDeger2 = "RF'E GORE UYGUN DEĞİLDİR"
-                donenDeger = "UYGUNDUR"
+                donenDeger = "DT'YE UYGUNDUR"
                 return render_template("index.html",donenDeger=donenDeger, donenDeger2=donenDeger2)
+        
         
     if request.method == "GET":
         return render_template("index.html")

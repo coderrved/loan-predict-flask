@@ -18,7 +18,7 @@ warnings.filterwarnings("ignore")
 pd.options.mode.chained_assignment = None
 
 
-ds = pd.read_csv("C:\\Users\\oem\\Desktop\\JupyterNotebook\\train_kredi_tahmini.csv")       # CSV dosyasını okudum.
+ds = pd.read_csv("C:\\Users\\oem\\Desktop\\Akilli_Sistemler\\AkıllıSistemlerFlask\\train_kredi_tahmini.csv")
 
 
 def missingValues(ds):
@@ -63,8 +63,6 @@ smote = SMOTE()
 
 X_sm, y_sm = smote.fit_resample(ds_x, ds_y)
 
-X_sm = StandardScaler().fit_transform(X_sm)
-
 X_train, X_test, y_train, y_test = train_test_split(X_sm, y_sm, test_size = 0.4, random_state = 120)
 
 from sklearn.tree import DecisionTreeClassifier
@@ -79,7 +77,8 @@ print(ilkDurum)
 
 cart_model = DecisionTreeClassifier()
 
-decision_tree_params = {"min_samples_split":[1,2,3,4,5,10,20,30],
+decision_tree_params = {"max_depth":[3,4,5,6,7,8,9,10],
+               "min_samples_split":[1,2,3,4,5,10,20,30],
                        "max_leaf_nodes":[1,2,3,4,5,10,20,30]}
 
 decision_tree_params
@@ -90,7 +89,7 @@ parameters_decision_tree=decision_tree_cv_model.best_params_
 
 print(parameters_decision_tree)
 
-decision_tree_tuned = DecisionTreeClassifier(max_depth=3,min_samples_split=parameters_decision_tree["min_samples_split"],max_leaf_nodes=parameters_decision_tree["max_leaf_nodes"]).fit(X_train,y_train)  # Düzenlemeler yapılacak.
+decision_tree_tuned = DecisionTreeClassifier(max_depth=parameters_decision_tree["max_depth"],min_samples_split=parameters_decision_tree["min_samples_split"],max_leaf_nodes=parameters_decision_tree["max_leaf_nodes"]).fit(X_train,y_train)  # Düzenlemeler yapılacak.
 
 y_pred = decision_tree_tuned.predict(X_test)
 

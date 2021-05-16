@@ -9,17 +9,15 @@ from sklearn.metrics import confusion_matrix, accuracy_score, classification_rep
 from sklearn.metrics import f1_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split,GridSearchCV,cross_val_score
 from imblearn.over_sampling import SMOTE
-from sklearn.model_selection import train_test_split,GridSearchCV,cross_val_score
 import warnings
 warnings.filterwarnings("ignore")
 pd.options.mode.chained_assignment = None
 
 
-ds = pd.read_csv("C:\\Users\\oem\\Desktop\\JupyterNotebook\\train_kredi_tahmini.csv")       # CSV dosyasını okudum.
+ds = pd.read_csv("C:\\Users\\oem\\Desktop\\Akilli_Sistemler\\AkıllıSistemlerFlask\\train_kredi_tahmini.csv")       # CSV dosyasını okudum.
 
 
 def missingValues(ds):
@@ -64,26 +62,21 @@ smote = SMOTE()
 
 X_sm, y_sm = smote.fit_resample(ds_x, ds_y)
 
-X_sm = StandardScaler().fit_transform(X_sm)
-
 X_train, X_test, y_train, y_test = train_test_split(X_sm, y_sm, test_size = 0.4, random_state = 120)
 
-from sklearn.tree import DecisionTreeClassifier
 
 rf_model = RandomForestClassifier().fit(X_train,y_train)
 y_pred = rf_model.predict(X_test)
 ilkDurum  = accuracy_score(y_test,y_pred)
 print(ilkDurum)
 
-rf_model1 = RandomForestClassifier(max_features=5,
+rf_model1 = RandomForestClassifier(max_features=7,
                                 min_samples_split=2,
-                                n_estimators=1000)
+                                n_estimators=140)
 rf_tuned=rf_model1.fit(X_train,y_train)
 y_pred1 = rf_tuned.predict(X_test)
 ikinciDurum  = accuracy_score(y_test,y_pred1)
 print(ikinciDurum)
-
-
 
 
 if ilkDurum > ikinciDurum:
